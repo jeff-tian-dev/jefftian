@@ -3,8 +3,16 @@
 @tailwind utilities;
 
 :root {
-  --background: #030014;
-  --foreground: #f8fafc;
+  --bg: #0d0b08;
+  --surface: #161210;
+  --surface-raised: #1f1a13;
+  --text: #f0e8d8;
+  --text-muted: #7a6e5e;
+  --accent: #f97316;
+  --accent-warm: #fbbf24;
+  --border: #252018;
+  --cursor-x: 50%;
+  --cursor-y: 50%;
 }
 
 * {
@@ -19,17 +27,16 @@ html {
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
+  background: var(--bg);
+  color: var(--text);
   overflow-x: hidden;
 }
 
 ::selection {
-  background: rgba(99, 102, 241, 0.3);
-  color: #f8fafc;
+  background: rgba(249, 115, 22, 0.25);
+  color: var(--text);
 }
 
-/* Custom Scrollbar */
 ::-webkit-scrollbar {
   width: 6px;
 }
@@ -39,71 +46,129 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(99, 102, 241, 0.3);
+  background: rgba(249, 115, 22, 0.25);
   border-radius: 3px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(99, 102, 241, 0.5);
+  background: rgba(249, 115, 22, 0.4);
 }
 
-/* Utility classes */
 @layer utilities {
-  .glass {
-    background: rgba(255, 255, 255, 0.03);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border: 1px solid rgba(255, 255, 255, 0.08);
+  .font-display {
+    font-family: var(--font-fraunces), Georgia, serif;
   }
 
-  .glass-strong {
-    background: rgba(255, 255, 255, 0.06);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border: 1px solid rgba(255, 255, 255, 0.12);
+  .font-body {
+    font-family: var(--font-bricolage), sans-serif;
   }
 
-  .gradient-text {
-    background: linear-gradient(135deg, #6366f1, #8b5cf6, #06b6d4);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+  .surface {
+    background: var(--surface);
+    border: 1px solid var(--border);
   }
 
-  .gradient-border {
-    position: relative;
-  }
-
-  .gradient-border::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    border-radius: inherit;
-    padding: 1px;
-    background: linear-gradient(135deg, #6366f1, #8b5cf6, #06b6d4);
-    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-    -webkit-mask-composite: xor;
-    mask-composite: exclude;
-    pointer-events: none;
+  .surface-raised {
+    background: var(--surface-raised);
+    border: 1px solid var(--border);
   }
 
   .text-balance {
     text-wrap: balance;
   }
 
-  .animate-in {
-    animation: fadeIn 0.6s ease-out forwards;
+  .accent-rule {
+    height: 3px;
+    width: 48px;
+    background: var(--accent);
+  }
+
+  .skill-chip {
+    transition: background-color 0.25s ease, border-color 0.25s ease;
+  }
+
+  .skill-chip:hover {
+    background-color: rgba(249, 115, 22, 0.08);
+    border-color: rgba(249, 115, 22, 0.25);
+  }
+
+  .skill-chip:hover svg {
+    color: var(--accent);
+  }
+
+  .skill-chip-electric {
+    border: 1.5px solid transparent !important;
+    background:
+      linear-gradient(var(--surface), var(--surface)) padding-box,
+      conic-gradient(
+        from var(--electric-angle),
+        transparent 72%,
+        rgba(255, 255, 255, 0.85) 78%,
+        #f97316 82%,
+        rgba(251, 191, 36, 0.9) 85%,
+        rgba(255, 255, 255, 0.6) 87%,
+        transparent 91%
+      ) border-box !important;
+    animation: electric-spin 2.2s linear infinite;
+    box-shadow: 0 0 6px rgba(249, 115, 22, 0.15);
+  }
+
+  .skill-chip-electric svg {
+    color: var(--accent-warm) !important;
+  }
+
+  .skill-chip-electric:hover {
+    animation-duration: 1.1s;
+    box-shadow: 0 0 10px rgba(249, 115, 22, 0.35),
+      0 0 20px rgba(249, 115, 22, 0.12);
+  }
+
+  .link-underline {
+    text-decoration: underline;
+    text-decoration-color: rgba(249, 115, 22, 0.4);
+    text-underline-offset: 4px;
+    transition: text-decoration-color 0.2s ease, color 0.2s ease;
+  }
+
+  .link-underline:hover {
+    text-decoration-color: var(--accent);
+    color: var(--accent-warm);
   }
 }
 
-/* Focus styles */
+@property --electric-angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+
+@keyframes electric-spin {
+  to {
+    --electric-angle: 360deg;
+  }
+}
+
 input:focus,
 textarea:focus {
   outline: none;
 }
 
-/* Smooth transitions for interactive elements */
 a,
 button {
-  transition: all 0.2s ease;
+  transition: color 0.2s ease, background-color 0.2s ease,
+    border-color 0.2s ease, opacity 0.2s ease;
+}
+
+@media (pointer: fine) {
+  .cursor-glow {
+    pointer-events: none;
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    background: radial-gradient(
+      400px circle at var(--cursor-x) var(--cursor-y),
+      rgba(249, 115, 22, 0.04),
+      transparent 40%
+    );
+  }
 }

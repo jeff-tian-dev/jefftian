@@ -2,12 +2,12 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { FiGithub, FiExternalLink, FiArrowUpRight } from "react-icons/fi";
+import { FiArrowUpRight } from "react-icons/fi";
 import SectionHeading from "./SectionHeading";
 import ProjectModal from "./ProjectModal";
 import { projects, type Project } from "@/data/portfolio";
 
-function ProjectCard({
+function ProjectRow({
   project,
   index,
   onSelect,
@@ -16,102 +16,82 @@ function ProjectCard({
   index: number;
   onSelect: (p: Project) => void;
 }) {
+  const [isHovered, setIsHovered] = useState(false);
+
   return (
     <motion.div
-      initial={{ opacity: 0, y: 40 }}
-      whileInView={{ opacity: 1, y: 0 }}
+      initial={{ opacity: 0, x: -20 }}
+      whileInView={{ opacity: 1, x: 0 }}
       viewport={{ once: true, margin: "-50px" }}
       transition={{
         duration: 0.6,
-        delay: index * 0.15,
+        delay: index * 0.08,
         ease: [0.22, 1, 0.36, 1],
       }}
+      className="border-b border-accent/15"
     >
-      <motion.div
-        whileHover={{ y: -6 }}
-        transition={{ duration: 0.3 }}
-        className="glass group relative cursor-pointer overflow-hidden rounded-2xl transition-all hover:border-indigo-500/20 hover:shadow-xl hover:shadow-indigo-500/5"
+      <button
         onClick={() => onSelect(project)}
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
+        className="group relative w-full cursor-pointer overflow-hidden py-8 text-left sm:py-10"
       >
-        {/* Gradient header area */}
-        <div
-          className={`relative h-48 overflow-hidden bg-gradient-to-br ${project.gradient} p-6 opacity-80`}
-        >
-          <div className="absolute inset-0 bg-black/20" />
-          <div className="relative z-10">
-            <span className="inline-block rounded-full bg-black/20 px-3 py-1 text-xs font-medium text-white/90 backdrop-blur-sm">
-              {project.date}
-            </span>
+        {/* Subtle background tint */}
+        <motion.div
+          className="absolute inset-0"
+          style={{ backgroundColor: "rgba(249,115,22,0.07)" }}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: isHovered ? 1 : 0 }}
+          transition={{ duration: 0.25, ease: "easeOut" }}
+        />
+
+        {/* Left border that grows in height */}
+        <motion.div
+          className="absolute left-0 top-0 w-[2px] origin-top bg-accent"
+          initial={{ scaleY: 0 }}
+          animate={{ scaleY: isHovered ? 1 : 0 }}
+          transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+        />
+
+        <div className="relative z-10 grid grid-cols-[auto_1fr_auto] items-center gap-4 sm:gap-8">
+          <span
+            className={`font-display text-4xl font-light tabular-nums transition-colors sm:text-6xl ${
+              isHovered ? "text-accent/40" : "text-text-muted/30"
+            }`}
+          >
+            {String(index + 1).padStart(2, "0")}
+          </span>
+
+          <div>
+            <h3
+              className={`font-display text-xl font-bold transition-colors sm:text-3xl ${
+                isHovered ? "text-text" : "text-text"
+              }`}
+            >
+              {project.title}
+            </h3>
+            <p
+              className={`mt-1 text-sm transition-colors ${
+                isHovered ? "text-accent" : "text-text-muted"
+              }`}
+            >
+              {project.subtitle}
+            </p>
           </div>
 
-          {/* Decorative shapes */}
-          <div className="absolute -bottom-4 -right-4 h-24 w-24 rounded-full bg-white/10 blur-xl" />
-          <div className="absolute -top-4 right-12 h-16 w-16 rounded-full bg-white/5 blur-lg" />
-
-          {/* Hover arrow */}
-          <div className="absolute bottom-4 right-4 rounded-full bg-white/10 p-2 opacity-0 backdrop-blur-sm transition-all group-hover:opacity-100">
-            <FiArrowUpRight size={18} className="text-white" />
-          </div>
-        </div>
-
-        {/* Content */}
-        <div className="p-6">
-          <h3 className="mb-1 text-lg font-bold text-white transition-colors group-hover:text-indigo-300">
-            {project.title}
-          </h3>
-          <p className="mb-1 text-sm font-medium text-indigo-400/80">
-            {project.subtitle}
-          </p>
-          <p className="mb-5 mt-3 line-clamp-2 text-sm leading-relaxed text-slate-400">
-            {project.description}
-          </p>
-
-          {/* Tech badges */}
-          <div className="mb-5 flex flex-wrap gap-1.5">
-            {project.techStack.slice(0, 4).map((tech) => (
-              <span
-                key={tech}
-                className="rounded-full bg-white/5 px-2.5 py-1 text-[11px] font-medium text-slate-400 ring-1 ring-white/5"
-              >
-                {tech}
-              </span>
-            ))}
-            {project.techStack.length > 4 && (
-              <span className="rounded-full bg-white/5 px-2.5 py-1 text-[11px] font-medium text-slate-500 ring-1 ring-white/5">
-                +{project.techStack.length - 4}
-              </span>
-            )}
-          </div>
-
-          {/* Links */}
-          <div className="flex gap-3">
-            {project.github && (
-              <a
-                href={project.github}
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={(e) => e.stopPropagation()}
-                className="flex items-center gap-1.5 text-xs font-medium text-slate-400 transition-colors hover:text-indigo-400"
-              >
-                <FiGithub size={14} />
-                Code
-              </a>
-            )}
-            {project.live && (
-              <a
-                href={project.live}
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={(e) => e.stopPropagation()}
-                className="flex items-center gap-1.5 text-xs font-medium text-slate-400 transition-colors hover:text-indigo-400"
-              >
-                <FiExternalLink size={14} />
-                Demo
-              </a>
-            )}
+          <div
+            className={`hidden items-center gap-3 text-right transition-colors sm:flex ${
+              isHovered ? "text-accent" : "text-text-muted"
+            }`}
+          >
+            <span className="text-xs uppercase tracking-wider">{project.date}</span>
+            <FiArrowUpRight
+              size={20}
+              className={`transition-transform ${isHovered ? "translate-x-0.5 -translate-y-0.5" : ""}`}
+            />
           </div>
         </div>
-      </motion.div>
+      </button>
     </motion.div>
   );
 }
@@ -120,16 +100,16 @@ export default function Projects() {
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
 
   return (
-    <section id="projects" className="relative px-6 py-32">
+    <section id="projects" className="relative px-6 py-32 sm:px-10 lg:px-16">
       <div className="mx-auto max-w-6xl">
         <SectionHeading
           title="Projects"
           subtitle="A selection of things I've built that I'm proud of."
         />
 
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <div>
           {projects.map((project, i) => (
-            <ProjectCard
+            <ProjectRow
               key={project.id}
               project={project}
               index={i}

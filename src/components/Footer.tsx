@@ -7,33 +7,20 @@ export default function Footer() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="relative px-6 pb-8 pt-16">
-      {/* Divider */}
-      <div className="mx-auto mb-8 h-px max-w-6xl bg-gradient-to-r from-transparent via-white/10 to-transparent" />
+    <footer className="relative px-6 pb-8 pt-8 sm:px-10 lg:px-16">
+      <div className="mx-auto mb-8 h-px max-w-6xl bg-border" />
 
       <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-6 sm:flex-row">
-        <div className="flex items-center gap-2">
-          <span className="text-sm font-medium text-slate-400">
-            &copy; {currentYear} {personalInfo.name}
-          </span>
-          <span className="text-slate-600">·</span>
-          <span className="text-sm text-slate-500">
-            Built with Next.js & Tailwind
-          </span>
+        <div className="flex items-center gap-2 text-sm text-text-muted">
+          <span>&copy; {currentYear} {personalInfo.name}</span>
+          <span className="text-border">·</span>
+          <span>{personalInfo.location}</span>
         </div>
 
         <div className="flex items-center gap-4">
           {[
-            {
-              icon: FiGithub,
-              href: personalInfo.github,
-              label: "GitHub",
-            },
-            {
-              icon: FiLinkedin,
-              href: personalInfo.linkedin,
-              label: "LinkedIn",
-            },
+            { icon: FiGithub, href: personalInfo.github, label: "GitHub" },
+            { icon: FiLinkedin, href: personalInfo.linkedin, label: "LinkedIn" },
             {
               icon: FiMail,
               href: `mailto:${personalInfo.email}`,
@@ -46,7 +33,7 @@ export default function Footer() {
               target="_blank"
               rel="noopener noreferrer"
               aria-label={link.label}
-              className="text-slate-500 transition-colors hover:text-slate-300"
+              className="text-text-muted transition-colors hover:text-accent"
             >
               <link.icon size={18} />
             </a>
