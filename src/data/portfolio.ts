@@ -68,12 +68,12 @@ export const personalInfo = {
   tagline:
     "Building intelligent systems at the intersection of AI & software engineering.",
   roles: [
+    "ML Engineer Intern @ SYNC",
+    "Contest Director @ CSSC",
     "Full-Stack Developer",
-    "AI Engineer",
     "CS Student @ UofT",
-    "Co-Founder @ July",
   ],
-  bio: `I'm a Computer Science student at the University of Toronto building systems that merge intelligent automation with clean, scalable software architecture. As co-founder of July, I scaled a competitive gaming community from 6 to 350+ members across 5 clans while shipping ClashTracker—the operational backbone for leadership. I also build local LLM job-search automation with RAG and fine-tuned classifiers (JobRadar), and computer-vision desktop automation distributed to active users (VisionLoop). Ranked Top 100 nationally in the Canadian Computing Competition.`,
+  bio: `I'm a Computer Science student at the University of Toronto (GPA 3.9) who builds production ML pipelines, full-stack platforms, and developer tooling. At SYNC I fine-tuned DistilBERT classifiers on 50K-row datasets and deployed models behind Dockerized Flask APIs. As Contest Director and Technical Lead at the Computer Science Student Community (CSSC), I run programming competitions for 120+ participants and built an automated judging pipeline that graded 2,000+ submissions. I also ship ClashTracker (analytics for 500+ users across 20 teams), JobRadar (local LLM job search with RAG and fine-tuned scoring), and VisionLoop (CV desktop automation with 20+ paying customers). Ranked Top 100 nationally in the Canadian Computing Competition.`,
   email: "jeff.tian23@gmail.com",
   phone: "+1-672-513-5392",
   github: "https://github.com/jeff-tian-dev",
@@ -131,8 +131,8 @@ export const projects: Project[] = [
     title: "ClashTracker",
     subtitle: "FastAPI & React Analytics Dashboard",
     description:
-      "Full-stack analytics dashboard that automated community performance tracking for competitive clans—9-router FastAPI backend, React 19 SPA, and scheduled Supercell API ingestion into PostgreSQL.",
-    longDescription: `ClashTracker is the operational backbone for July's competitive clans, consolidating war results, Legends League standings, and Capital Raid performance. A Python ingestion service pulls from the Supercell API on a systemd timer (~144 runs/day, ~250 API calls per cycle), eliminating ~5–8 hrs/week of manual community management for leadership. The FastAPI backend exposes nine domain routers with Pydantic validation and structured logging; the React 19 SPA serves ~500 users across 40 teams with 50k+ rows of historical data in PostgreSQL via Supabase. Deployed on an Oracle Cloud VM with Caddy reverse proxy, TLS, and GitHub Actions CI/CD shipping the SPA to GitHub Pages on every push.`,
+      "Full-stack analytics platform for clan leadership—9-router FastAPI backend, React 19 SPA, and scheduled Supercell API ingestion into PostgreSQL at 144 runs/day.",
+    longDescription: `ClashTracker consolidates war results, Legends League standings, and Capital Raid performance into a single searchable dashboard. A Python ingestion service pulls from the Supercell API on a systemd timer (~144 runs/day, ~250 API calls per cycle), eliminating 3–5 hours of manual reporting per week for clan leads. The FastAPI backend exposes nine domain routers with Pydantic validation and structured logging; the React 19 SPA serves 500+ users across 20 teams with 100k+ rows of historical data in PostgreSQL via Supabase. Query optimizations cut average dashboard load time by 80%. Deployed on an Oracle Cloud VM with Caddy reverse proxy, TLS, and GitHub Actions CI/CD shipping the SPA to GitHub Pages on every push.`,
     techStack: [
       "FastAPI",
       "React 19",
@@ -144,15 +144,15 @@ export const projects: Project[] = [
       "Oracle Cloud",
     ],
     features: [
-      "~500 users across 40 teams; 50k+ rows of historical PostgreSQL data",
+      "500+ users across 20 teams; 100k+ rows of historical PostgreSQL data",
       "Nine FastAPI routers with scheduled ingestion at ~144 runs/day (~250 API calls/cycle)",
-      "Eliminates ~5–8 hrs/week of manual community management for clan leadership",
+      "Saves clan leads 3–5 hours weekly; 80% faster average dashboard load time",
       "Oracle Cloud VM deployment with Caddy reverse proxy, TLS, and systemd timers",
       "GitHub Actions CI/CD pipeline shipping the SPA to GitHub Pages on every push",
     ],
     gradient: "from-orange-500 via-amber-500 to-yellow-500",
     iconBg: "bg-orange-500/20",
-    date: "Jul 2025 – Present",
+    date: "Jul 2025 – Apr 2026",
     github: "https://github.com/jeff-tian-dev/ClashTracker",
   },
   {
@@ -161,7 +161,7 @@ export const projects: Project[] = [
     subtitle: "Local LLM Job Search Automation Tool",
     description:
       "End-to-end job-search agent with a RAG pipeline for job-tailored resume generation, a fine-tuned PyTorch classifier for relevance scoring, and a React dashboard for triage and export—all at zero recurring LLM API cost.",
-    longDescription: `JobRadar automates job search without recurring paid LLM APIs. A RAG pipeline uses Ollama embeddings to retrieve relevant experience chunks from a personal dossier, generating job-tailored resumes via local LLM. A manual labeling pipeline was automated by fine-tuning a transformer classifier in PyTorch on proprietary labels, improving accuracy from ~60% to 94% (92% F1). The FastAPI + React dashboard supports reviewing listings, re-scoring roles, and exporting tailored resumes. pytest covers the pipeline with HTTP and LLM calls mocked.`,
+    longDescription: `JobRadar automates job search without recurring paid LLM APIs. A RAG pipeline uses Ollama embeddings to retrieve relevant experience chunks from a personal dossier, generating job-tailored resumes via local LLM. A fine-tuned PyTorch transformer classifier on 1,200 hand-labeled postings improved F1 from 0.71 to 0.92 over a keyword baseline. The FastAPI + React dashboard supports reviewing listings, re-scoring roles, and exporting tailored resumes. pytest covers the pipeline with HTTP and LLM calls mocked.`,
     techStack: [
       "Python",
       "FastAPI",
@@ -174,7 +174,7 @@ export const projects: Project[] = [
     ],
     features: [
       "RAG pipeline with Ollama embeddings retrieving dossier chunks for tailored resume generation",
-      "Fine-tuned PyTorch transformer classifier: ~60% → 94% accuracy (92% F1) on proprietary labels",
+      "Fine-tuned PyTorch classifier on 1,200 hand-labeled postings: F1 0.71 → 0.92 vs keyword baseline",
       "Zero recurring paid LLM API cost for scoring and resume tailoring (local Ollama only)",
       "React dashboard for reviewing listings, re-scoring roles, and exporting tailored resumes",
       "Full pytest coverage with HTTP and LLM calls mocked",
@@ -189,8 +189,8 @@ export const projects: Project[] = [
     title: "VisionLoop",
     subtitle: "Computer-Vision Input Simulation Engine",
     description:
-      "Windows automation engine using OpenCV template matching and Win32 APIs to execute repetitive UI workflows—distributed to 15+ active users with FastAPI backend, Supabase, and Stripe integration.",
-    longDescription: `VisionLoop automates repetitive Windows UI workflows using OpenCV template matching and Win32 message-based input. Each 20-minute session executes ~150–500 automated actions versus ~25–50 manual interactions, reclaiming ~5–7 hrs/week of active attention per user across ~2 daily sessions. A Win32 layer finds target HWNDs, captures frames via PrintWindow, and sends input via SendMessage with Bezier-curve mouse paths. Packaged with PyInstaller and distributed to 15+ active users, with FastAPI, Supabase, and Stripe powering licensing and backend services.`,
+      "Windows automation engine using OpenCV template matching and Win32 APIs—50 ms detection-to-action latency, with FastAPI, Supabase, Stripe licensing, and 20+ paying users.",
+    longDescription: `VisionLoop automates repetitive Windows UI workflows using OpenCV template matching and Win32 message-based input, achieving 50 ms detection-to-action latency for near-instant desktop response. A Win32 layer finds target HWNDs, captures frames via PrintWindow, and sends input via SendMessage with Bezier-curve mouse paths. A license-key system with FastAPI and Supabase backend, hardware-fingerprint binding, and Stripe checkout/webhook integration supports 20+ paying users and $250+ MRR. Packaged with PyInstaller for distribution.`,
     techStack: [
       "Python",
       "OpenCV",
@@ -201,11 +201,11 @@ export const projects: Project[] = [
       "PyInstaller",
     ],
     features: [
-      "~150–500 automated UI actions per 20-minute session vs ~25–50 manual interactions",
-      "Reclaims ~5–7 hrs/week of active attention per user across ~2 daily automated sessions",
+      "50 ms detection-to-action latency for time-sensitive desktop workflows",
       "OpenCV template matching + Win32 SendMessage input with Bezier-curve mouse paths",
-      "Distributed to 15+ active users; packaged with PyInstaller",
-      "FastAPI backend with Supabase and Stripe for licensing and user management",
+      "License-key system with hardware-fingerprint binding and Stripe checkout/webhooks",
+      "20+ paying users, $250+ MRR; packaged with PyInstaller",
+      "FastAPI backend with Supabase for licensing and user management",
     ],
     gradient: "from-amber-600 via-orange-500 to-red-500",
     iconBg: "bg-amber-600/20",
@@ -249,18 +249,33 @@ export const projects: Project[] = [
 
 export const timeline: TimelineItem[] = [
   {
+    title: "Machine Learning Engineer Intern",
+    organization: "SYNC",
+    date: "May 2026 — Aug 2026",
+    description:
+      "Built and fine-tuned a DistilBERT text classification model (PyTorch) on a 50K-row internal dataset, improving F1 from 0.71 to 0.89 through hyperparameter tuning and data augmentation. Built a Python/Pandas pipeline to clean and merge 3 data sources, cutting manual data prep from 4 hours to 20 minutes per run. Containerized the model with Docker and deployed it behind a Flask API, enabling 2 other engineers to integrate predictions into a downstream dashboard.",
+  },
+  {
+    title: "Contest Director / Technical Lead",
+    organization: "Computer Science Student Community (CSSC)",
+    date: "Oct 2025 — Present",
+    description:
+      "Designed and ran 4 programming competitions for 120+ participants, authoring 25+ original problems with editorials, test data, and model solutions across difficulty tiers. Built an automated judging pipeline (Docker sandboxing, dev statistics dashboard, live scoreboard) alongside 2 other engineers that graded 2,000+ submissions with zero manual intervention.",
+    badge: "Leadership",
+  },
+  {
     title: "Co-Founder & Software Engineer",
-    organization: "July",
+    organization: "July — Competitive Gaming Community",
     date: "Apr 2025 — Present",
     description:
-      "Built and deployed ClashTracker, a full-stack analytics dashboard that automated community performance tracking, becoming the operational backbone for 5 competitive clans. Co-founded July, scaling an online competitive community from 6 to 350+ members across 5 clans, with the top clan ranked #1 internationally (May 2026). Organized 6+ tournaments end-to-end with prize logistics valued at up to $150. Tracked and analyzed member performance metrics to drive competitive roster selection across 30 spots.",
+      "Built a Discord moderation bot that classifies posted links against a scam-domain list and heuristics, auto-flagging 50+ messages/month to a staff channel. Shipped ClashTracker as the analytics platform for competitive clan leadership.",
   },
   {
     title: "B.Sc. Computer Science",
     organization: "University of Toronto Mississauga",
     date: "2024 — 2028 (Expected)",
     description:
-      "Relevant coursework: Data Structures & Algorithms, Discrete Math, Linear Algebra, Statistics, Multivariable Calculus.",
+      "GPA 3.9. Relevant coursework: Data Structures & Algorithms, Discrete Math, Linear Algebra, Statistics, Multivariable Calculus.",
   },
   {
     title: "ReturnClip — Hackathon build",

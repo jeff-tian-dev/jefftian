@@ -83,7 +83,7 @@ export default function Hero() {
           transition={{ duration: 0.6, delay: 0.85, ease: [0.22, 1, 0.36, 1] }}
           className="mb-10 max-w-md text-base italic text-text-muted sm:text-lg"
         >
-          Full-stack &amp; AI engineer, CS @ UofT
+          ML engineer &amp; full-stack developer · CS @ UofT
         </motion.p>
 
         <motion.div

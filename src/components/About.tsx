@@ -48,11 +48,15 @@ export default function About() {
             <ul className="space-y-3 text-sm text-text-muted">
               <li className="flex items-center gap-3">
                 <span className="inline-block h-1.5 w-1.5 rounded-full bg-accent" />
-                University of Toronto Mississauga
+                ML Engineer Intern @ SYNC
               </li>
               <li className="flex items-center gap-3">
                 <span className="inline-block h-1.5 w-1.5 rounded-full bg-accent" />
-                B.Sc. Computer Science — Class of 2028
+                Contest Director / Technical Lead @ CSSC
+              </li>
+              <li className="flex items-center gap-3">
+                <span className="inline-block h-1.5 w-1.5 rounded-full bg-accent" />
+                B.Sc. Computer Science @ UofT — GPA 3.9, Class of 2028
               </li>
               <li className="flex items-center gap-3">
                 <span className="inline-block h-1.5 w-1.5 rounded-full bg-accent" />

@@ -37,7 +37,7 @@ export default function Experience() {
       <div className="mx-auto max-w-3xl">
         <SectionHeading
           title="Experience"
-          subtitle="Education, independent engineering, leadership, and competition highlights."
+          subtitle="Internships, club leadership, education, and competition highlights."
         />
 
         <div className="relative">

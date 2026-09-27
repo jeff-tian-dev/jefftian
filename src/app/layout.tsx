@@ -16,7 +16,7 @@ const bricolage = Bricolage_Grotesque({
 export const metadata: Metadata = {
   title: "Jeff Tian | Full-Stack & AI Engineer",
   description:
-    "Portfolio of Jeff Tian — Computer Science student at the University of Toronto, specializing in full-stack development and AI engineering.",
+    "Portfolio of Jeff Tian — ML engineer and full-stack developer, CS @ UofT. SYNC intern, CSSC Contest Director, builder of ClashTracker, JobRadar, and VisionLoop.",
   keywords: [
     "Jeff Tian",
     "software engineer",
@@ -29,7 +29,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Jeff Tian | Full-Stack & AI Engineer",
     description:
-      "Computer Science student at the University of Toronto, specializing in full-stack development and AI engineering.",
+      "ML engineer and full-stack developer at the University of Toronto. SYNC intern, CSSC Contest Director, and builder of production ML and web systems.",
     type: "website",
   },
 };
