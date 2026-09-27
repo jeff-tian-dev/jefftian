@@ -73,7 +73,7 @@ export const personalInfo = {
     "Full-Stack Developer",
     "CS Student @ UofT",
   ],
-  bio: `I'm a Computer Science student at the University of Toronto (GPA 3.9) who builds production ML pipelines, full-stack platforms, and developer tooling. At SYNC I fine-tuned DistilBERT classifiers on 50K-row datasets and deployed models behind Dockerized Flask APIs. As Contest Director and Technical Lead at the Computer Science Student Community (CSSC), I run programming competitions for 120+ participants and built an automated judging pipeline that graded 2,000+ submissions. I also ship ClashTracker (analytics for 500+ users across 20 teams), JobRadar (local LLM job search with RAG and fine-tuned scoring), and VisionLoop (CV desktop automation with 20+ paying customers). Ranked Top 100 nationally in the Canadian Computing Competition.`,
+  bio: `I'm a Computer Science student at the University of Toronto who builds production ML pipelines, full-stack platforms, and developer tooling. At SYNC I fine-tuned DistilBERT classifiers on 50K-row datasets and deployed models behind Dockerized Flask APIs. As Contest Director and Technical Lead at the Computer Science Student Community (CSSC), I run programming competitions for 120+ participants and built an automated judging pipeline that graded 2,000+ submissions. I also ship ClashTracker (analytics for 500+ users across 20 teams), JobRadar (local LLM job search with RAG and fine-tuned scoring), and VisionLoop (CV desktop automation with 20+ paying customers). Ranked Top 100 nationally in the Canadian Computing Competition.`,
   email: "jeff.tian23@gmail.com",
   phone: "+1-672-513-5392",
   github: "https://github.com/jeff-tian-dev",
