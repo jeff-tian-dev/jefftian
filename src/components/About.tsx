@@ -56,7 +56,7 @@ export default function About() {
               </li>
               <li className="flex items-center gap-3">
                 <span className="inline-block h-1.5 w-1.5 rounded-full bg-accent" />
-                B.Sc. Computer Science @ UofT — GPA 3.9, Class of 2028
+                B.Sc. Computer Science @ UofT — Class of 2028
               </li>
               <li className="flex items-center gap-3">
                 <span className="inline-block h-1.5 w-1.5 rounded-full bg-accent" />

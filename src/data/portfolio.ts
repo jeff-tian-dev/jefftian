@@ -275,7 +275,7 @@ export const timeline: TimelineItem[] = [
     organization: "University of Toronto Mississauga",
     date: "2024 — 2028 (Expected)",
     description:
-      "GPA 3.9. Relevant coursework: Data Structures & Algorithms, Discrete Math, Linear Algebra, Statistics, Multivariable Calculus.",
+      "Relevant coursework: Data Structures & Algorithms, Discrete Math, Linear Algebra, Statistics, Multivariable Calculus.",
   },
   {
     title: "ReturnClip — Hackathon build",
