@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { FiCheck, FiCopy, FiDownload, FiMail } from "react-icons/fi";
+import { FiCheck, FiCopy, FiMail } from "react-icons/fi";
 import { personalInfo, skillGroups } from "@/data/portfolio";
 import { seg } from "@/lib/seg";
 import Marquee from "./Marquee";
@@ -91,10 +91,6 @@ export default function Finale() {
             {copyState === "copied" ? <FiCheck aria-hidden="true" /> : <FiCopy aria-hidden="true" />}
             {copyState === "copied" ? "Copied" : "Copy email"}
           </button>
-          <a href={personalInfo.resume} download className="btn">
-            <FiDownload aria-hidden="true" />
-            Download resume (PDF)
-          </a>
         </div>
 
         <p aria-live="polite" className="mt-3 min-h-[1.6em] text-base">

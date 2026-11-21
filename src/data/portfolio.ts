@@ -65,7 +65,6 @@ export const personalInfo = {
   github: "https://github.com/jeff-tian-dev",
   linkedin: "https://linkedin.com/in/jeff-tian",
   location: "Toronto, ON",
-  resume: "/Jeff_Tian_Resume_SWE.pdf",
 };
 
 export const problems: Problem[] = [
