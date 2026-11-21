@@ -2,173 +2,427 @@
 @tailwind components;
 @tailwind utilities;
 
+/*
+ * Colour tokens are RGB channels so Tailwind opacity modifiers work.
+ * One palette, used everywhere: black, white, blue (#1E5BFF) as the main
+ * colour and yellow (#FFC93C) for highlights. Green, red and grey appear
+ * only where they mean something (verdicts and tests).
+ * The page is a soft blue-grey (easier on the eyes than white);
+ * chapters alternate it with full blue, and the finale is black.
+ */
+:root,
+[data-tone="tint"],
+[data-tone="card"] {
+  --paper: 220 228 245;
+  --ink: 11 11 15;
+  --graphite: 61 72 92;
+  --rule: 11 11 15;
+  --accent: 30 91 255;
+  --accepted: 21 101 52;
+  --wrong: 185 28 28;
+  --pop: 30 91 255;
+  --pop2: 255 201 60;
+  --scrim: 11 11 15;
+}
 :root {
-  --bg: #0d0b08;
-  --surface: #161210;
-  --surface-raised: #1f1a13;
-  --text: #f0e8d8;
-  --text-muted: #7a6e5e;
-  --accent: #f97316;
-  --accent-warm: #fbbf24;
-  --border: #252018;
-  --cursor-x: 50%;
-  --cursor-y: 50%;
+  color-scheme: light;
+}
+[data-tone="card"] {
+  --paper: 255 255 255;
+  --graphite: 71 85 105;
+  --rule: 212 212 216;
+}
+[data-tone="blue"] {
+  --paper: 30 91 255;
+  --ink: 255 255 255;
+  --graphite: 240 244 255;
+  --rule: 255 255 255;
+  --accent: 255 201 60;
+  --accepted: 255 255 255;
+  --wrong: 240 244 255;
+  --pop: 255 201 60;
+  --pop2: 255 255 255;
+}
+[data-tone="finale"] {
+  --paper: 11 11 15;
+  --ink: 255 255 255;
+  --graphite: 201 201 209;
+  --rule: 63 63 70;
+  --accent: 255 201 60;
+  --accepted: 255 255 255;
+  --wrong: 201 201 209;
+  --pop: 255 201 60;
+  --pop2: 30 91 255;
 }
 
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+[data-tone] {
+  background: rgb(var(--paper));
+  color: rgb(var(--ink));
 }
 
 html {
-  scroll-behavior: smooth;
-  scroll-padding-top: 80px;
+  /* Header (56px) plus the phone chapter bar (52px). */
+  scroll-padding-top: 7rem;
+  scrollbar-gutter: stable;
+  -webkit-text-size-adjust: 100%;
+}
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+html.scroll-locked {
+  overflow: hidden;
 }
 
 body {
-  background: var(--bg);
-  color: var(--text);
-  overflow-x: hidden;
+  background: rgb(var(--paper));
+  color: rgb(var(--ink));
+  font-family: var(--font-body), system-ui, sans-serif;
+  font-size: 1.125rem;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
 }
 
 ::selection {
-  background: rgba(249, 115, 22, 0.25);
-  color: var(--text);
+  background: rgb(var(--ink));
+  color: rgb(var(--paper));
 }
 
-::-webkit-scrollbar {
-  width: 6px;
+:focus-visible {
+  outline: 3px solid rgb(var(--accent));
+  outline-offset: 3px;
 }
 
-::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-::-webkit-scrollbar-thumb {
-  background: rgba(249, 115, 22, 0.25);
-  border-radius: 3px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: rgba(249, 115, 22, 0.4);
+@layer components {
+  .btn {
+    display: inline-flex;
+    min-height: 3rem;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    border: 2px solid rgb(var(--ink));
+    padding: 0 1.25rem;
+    font-family: var(--font-body), system-ui, sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    color: rgb(var(--ink));
+    box-shadow: 4px 4px 0 0 rgb(var(--ink));
+    transition: transform 120ms ease-out, box-shadow 120ms ease-out,
+      background-color 120ms ease-out, color 120ms ease-out;
+  }
+  .btn:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 6px 6px 0 0 rgb(var(--ink));
+  }
+  .btn:active {
+    transform: translate(4px, 4px);
+    box-shadow: 0 0 0 0 rgb(var(--ink));
+  }
+  .btn-solid {
+    background: rgb(var(--ink));
+    color: rgb(var(--paper));
+  }
+  .link {
+    font-weight: 700;
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 5px;
+  }
+  .link:hover {
+    background: rgb(var(--ink));
+    color: rgb(var(--paper));
+    text-decoration-color: transparent;
+  }
 }
 
 @layer utilities {
-  .font-display {
-    font-family: var(--font-fraunces), Georgia, serif;
+  .figures {
+    font-variant-numeric: lining-nums tabular-nums;
   }
-
-  .font-body {
-    font-family: var(--font-bricolage), sans-serif;
-  }
-
-  .surface {
-    background: var(--surface);
-    border: 1px solid var(--border);
-  }
-
-  .surface-raised {
-    background: var(--surface-raised);
-    border: 1px solid var(--border);
-  }
-
   .text-balance {
     text-wrap: balance;
   }
-
-  .accent-rule {
-    height: 3px;
-    width: 48px;
-    background: var(--accent);
+  .text-pretty {
+    text-wrap: pretty;
   }
-
-  .skill-chip {
-    transition: background-color 0.25s ease, border-color 0.25s ease;
+  .wide {
+    font-variation-settings: "wdth" 112;
   }
-
-  .skill-chip:hover {
-    background-color: rgba(249, 115, 22, 0.08);
-    border-color: rgba(249, 115, 22, 0.25);
-  }
-
-  .skill-chip:hover svg {
-    color: var(--accent);
-  }
-
-  .skill-chip-electric {
-    border: 1.5px solid transparent !important;
-    background:
-      linear-gradient(var(--surface), var(--surface)) padding-box,
-      conic-gradient(
-        from var(--electric-angle),
-        transparent 72%,
-        rgba(255, 255, 255, 0.85) 78%,
-        #f97316 82%,
-        rgba(251, 191, 36, 0.9) 85%,
-        rgba(255, 255, 255, 0.6) 87%,
-        transparent 91%
-      ) border-box !important;
-    animation: electric-spin 2.2s linear infinite;
-    box-shadow: 0 0 6px rgba(249, 115, 22, 0.15);
-  }
-
-  .skill-chip-electric svg {
-    color: var(--accent-warm) !important;
-  }
-
-  .skill-chip-electric:hover {
-    animation-duration: 1.1s;
-    box-shadow: 0 0 10px rgba(249, 115, 22, 0.35),
-      0 0 20px rgba(249, 115, 22, 0.12);
-  }
-
-  .link-underline {
-    text-decoration: underline;
-    text-decoration-color: rgba(249, 115, 22, 0.4);
-    text-underline-offset: 4px;
-    transition: text-decoration-color 0.2s ease, color 0.2s ease;
-  }
-
-  .link-underline:hover {
-    text-decoration-color: var(--accent);
-    color: var(--accent-warm);
+  .widest {
+    font-variation-settings: "wdth" 125;
   }
 }
 
-@property --electric-angle {
-  syntax: "<angle>";
-  initial-value: 0deg;
-  inherits: false;
+/* ------------------------------------------------------------------ */
+/* Scene engine                                                         */
+/*                                                                      */
+/* A <Scene> sets --p (0 to 1) from scroll. Each animated element is a  */
+/* .seg with a start (--s) and length (--l); it derives its own --t     */
+/* (0 to 1) in pure CSS. With JS off or reduced motion, --p is 1, so    */
+/* every element renders in its final, readable state.                  */
+/* ------------------------------------------------------------------ */
+.seg {
+  --t: clamp(0, calc((var(--p, 1) - var(--s, 0)) / var(--l, 1)), 1);
+}
+/* Pop in with a small overshoot. */
+.pop-in {
+  opacity: var(--t);
+  scale: calc(var(--t) + 0.3 * sin(var(--t) * 3.1416));
+  transform-box: fill-box;
+  transform-origin: center;
+}
+.rise-in {
+  opacity: var(--t);
+  translate: 0 calc((1 - var(--t)) * 2.5rem);
+}
+.slide-in {
+  opacity: var(--t);
+  translate: calc((1 - var(--t)) * -4rem) 0;
+  rotate: calc((1 - var(--t)) * -8deg);
+}
+.word-rise {
+  translate: 0 calc((1 - var(--t)) * 110%);
+  rotate: calc((1 - var(--t)) * 6deg);
+}
+.strike {
+  scale: var(--t) 1;
+  transform-origin: left center;
+}
+.type-char {
+  opacity: var(--t);
+}
+.draw {
+  stroke-dasharray: 1;
+  stroke-dashoffset: calc(1 - var(--t));
+}
+.stamp-in {
+  opacity: var(--t);
+  scale: calc(2.4 - 1.4 * var(--t));
+  rotate: calc(-10deg - (1 - var(--t)) * 25deg);
+}
+/* A card flip: shrinks to an edge at the halfway point, then swaps face. */
+.flip {
+  scale: max(cos(var(--t) * 3.1416), calc(-1 * cos(var(--t) * 3.1416))) 1;
+}
+.flip .face-front {
+  opacity: clamp(0, calc((0.5 - var(--t)) * 100), 1);
+}
+.flip .face-back {
+  opacity: clamp(0, calc((var(--t) - 0.5) * 100), 1);
+}
+/* Chapter 4: cards start stacked and deal out into the row. */
+/* Inline styles set the --*-wide values; phones (stacked cards) skip the
+   sideways deal and keep only a small tilt. */
+.deal {
+  --dx: var(--dx-wide, 0%);
+  --r0: var(--r0-wide, 0deg);
+  --r1: var(--r1-wide, 0deg);
+  translate: calc((1 - var(--t)) * var(--dx)) calc((1 - var(--t)) * 2rem);
+  rotate: calc(var(--r0) * (1 - var(--t)) + var(--r1) * var(--t));
+}
+@media (max-width: 767px) {
+  .deal {
+    --dx: 0%;
+    --r0: -4deg;
+    --r1: 0deg;
+  }
+}
+.gauge-needle {
+  transform-box: view-box;
+  transform-origin: 150px 150px;
+  rotate: calc(-90deg + 180deg * (0.9 - 0.72 * var(--t)));
 }
 
-@keyframes electric-spin {
+/* ------------------------------------------------------------------ */
+/* Hero: one orchestrated load moment, then scroll and pointer          */
+/* ------------------------------------------------------------------ */
+.hero-name {
+  font-variation-settings: "wdth" 100;
+}
+.hero-shape {
+  translate: calc(var(--hp, 0) * var(--dx, 0px) + var(--mx, 0) * var(--depth, 0px))
+    calc(var(--hp, 0) * var(--dy, 0px) + var(--my, 0) * var(--depth, 0px));
+  rotate: calc(var(--hp, 0) * var(--rot, 0deg));
+}
+.marker {
+  background-image: linear-gradient(
+    rgb(var(--mark)),
+    rgb(var(--mark))
+  );
+  background-repeat: no-repeat;
+  background-position: 0 88%;
+  background-size: 100% 0.42em;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  @media (min-width: 768px) {
+    .hero-name {
+      font-variation-settings: "wdth" var(--hero-wdth, 62);
+    }
+  }
+  .hero-letter {
+    animation: letter-drop 700ms cubic-bezier(0.2, 0.9, 0.3, 1.25) both;
+    animation-delay: calc(150ms + var(--i) * 55ms);
+  }
+  .hero-shape-inner {
+    animation: shape-in 900ms cubic-bezier(0.2, 0.9, 0.3, 1.3) both;
+    animation-delay: calc(500ms + var(--i) * 90ms);
+  }
+  .marker {
+    animation: marker-sweep 600ms cubic-bezier(0.6, 0, 0.2, 1) both;
+    animation-delay: calc(1100ms + var(--i) * 180ms);
+  }
+}
+
+@keyframes letter-drop {
+  from {
+    opacity: 0;
+    translate: 0 -0.7em;
+    rotate: -14deg;
+  }
   to {
-    --electric-angle: 360deg;
+    opacity: 1;
+    translate: 0 0;
+    rotate: 0deg;
+  }
+}
+@keyframes shape-in {
+  from {
+    scale: 0;
+    rotate: -120deg;
+  }
+  to {
+    scale: 1;
+    rotate: 0deg;
+  }
+}
+@keyframes marker-sweep {
+  from {
+    background-size: 0% 0.42em;
+  }
+  to {
+    background-size: 100% 0.42em;
   }
 }
 
-input:focus,
-textarea:focus {
-  outline: none;
+/* ------------------------------------------------------------------ */
+/* Chapter 4 mini animations: play once (under 3s) when the card comes  */
+/* into view, replay on hover or focus. Armed only by JS with motion    */
+/* allowed, so the default is the finished frame.                       */
+/* ------------------------------------------------------------------ */
+.mini {
+  container-type: size;
+}
+[data-armed] .mv-cursor {
+  animation: mv-cursor 2.4s ease-in-out both paused;
+}
+[data-armed] .mv-hit {
+  animation: mv-hit 0.5s ease-out both paused;
+  animation-delay: var(--d);
+}
+[data-armed] .mini-chip {
+  animation: chip-pop 0.4s cubic-bezier(0.2, 0.9, 0.3, 1.4) both paused;
+  animation-delay: var(--d, 2.3s);
+}
+[data-armed] .mr-sweep {
+  animation: mr-sweep 2.4s cubic-bezier(0.3, 0, 0.2, 1) both paused;
+}
+[data-armed] .mr-dot,
+[data-armed] .mp-step {
+  animation: chip-pop 0.35s cubic-bezier(0.2, 0.9, 0.3, 1.5) both paused;
+  animation-delay: var(--d);
+}
+[data-armed] .mp-ring {
+  animation: mp-ring 2.2s linear both paused;
+}
+[data-armed][data-play] .mv-cursor,
+[data-armed][data-play] .mv-hit,
+[data-armed][data-play] .mini-chip,
+[data-armed][data-play] .mr-sweep,
+[data-armed][data-play] .mr-dot,
+[data-armed][data-play] .mp-step,
+[data-armed][data-play] .mp-ring {
+  animation-play-state: running;
 }
 
-a,
-button {
-  transition: color 0.2s ease, background-color 0.2s ease,
-    border-color 0.2s ease, opacity 0.2s ease;
+.mv-cursor {
+  translate: 80cqw 58cqh;
+}
+@keyframes mv-cursor {
+  0% { translate: 6cqw 86cqh; }
+  28% { translate: 22cqw 62cqh; }
+  36% { translate: 22cqw 62cqh; }
+  58% { translate: 52cqw 28cqh; }
+  66% { translate: 52cqw 28cqh; }
+  90% { translate: 80cqw 58cqh; }
+  100% { translate: 80cqw 58cqh; }
+}
+@keyframes mv-hit {
+  from { opacity: 0; scale: 1.8; }
+  to { opacity: 1; scale: 1; }
+}
+@keyframes chip-pop {
+  from { opacity: 0; scale: 0.3; }
+  to { opacity: 1; scale: 1; }
+}
+@keyframes mr-sweep {
+  from { rotate: 0deg; }
+  to { rotate: 720deg; }
+}
+.mp-ring {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 0;
+}
+@keyframes mp-ring {
+  from { stroke-dashoffset: 1; }
+  to { stroke-dashoffset: 0; }
 }
 
-@media (pointer: fine) {
-  .cursor-glow {
-    pointer-events: none;
-    position: fixed;
-    inset: 0;
-    z-index: 0;
-    background: radial-gradient(
-      400px circle at var(--cursor-x) var(--cursor-y),
-      rgba(249, 115, 22, 0.04),
-      transparent 40%
-    );
+/* Finale marquee: stops on hover/focus, off for reduced motion. */
+.marquee-track {
+  animation: marquee 38s linear infinite;
+}
+.marquee:hover .marquee-track,
+.marquee:focus-within .marquee-track {
+  animation-play-state: paused;
+}
+@keyframes marquee {
+  to {
+    translate: -50% 0;
   }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track {
+    animation: none;
+  }
+  [data-armed] .mv-cursor,
+  [data-armed] .mv-hit,
+  [data-armed] .mini-chip,
+  [data-armed] .mr-sweep,
+  [data-armed] .mr-dot,
+  [data-armed] .mp-step,
+  [data-armed] .mp-ring {
+    animation: none !important;
+  }
+}
+
+/* Native <dialog> reset: the panel inside handles its own layout. */
+.problem-dialog {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100dvh;
+  max-width: none;
+  max-height: none;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  overflow: hidden;
+  color: inherit;
+}
+.problem-dialog::backdrop {
+  background: transparent;
 }

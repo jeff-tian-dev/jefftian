@@ -1,37 +1,39 @@
-import type { Metadata } from "next";
-import { Fraunces, Bricolage_Grotesque } from "next/font/google";
+import type { Metadata, Viewport } from "next";
+import { Archivo, Space_Grotesk } from "next/font/google";
 import "./globals.css";
 
-const fraunces = Fraunces({
+// Variable Archivo, including the width axis the hero animates.
+const archivo = Archivo({
   subsets: ["latin"],
-  variable: "--font-fraunces",
-  axes: ["SOFT", "WONK", "opsz"],
+  axes: ["wdth"],
+  variable: "--font-display",
+  display: "swap",
 });
 
-const bricolage = Bricolage_Grotesque({
+const spaceGrotesk = Space_Grotesk({
   subsets: ["latin"],
-  variable: "--font-bricolage",
+  variable: "--font-body",
+  display: "swap",
 });
 
 export const metadata: Metadata = {
-  title: "Jeff Tian | Full-Stack & AI Engineer",
+  title: "Jeff Tian",
   description:
-    "Portfolio of Jeff Tian — ML engineer and full-stack developer, CS @ UofT. SYNC intern, CSSC Contest Director, builder of ClashTracker, JobRadar, and VisionLoop.",
-  keywords: [
-    "Jeff Tian",
-    "software engineer",
-    "full-stack developer",
-    "AI engineer",
-    "University of Toronto",
-    "portfolio",
-  ],
+    "Jeff Tian builds software people actually use. ML engineer intern at SYNC, contest director at UofT's CSSC, co-founder of July, and builder of ClashTracker, VisionLoop, and JobRadar.",
   authors: [{ name: "Jeff Tian" }],
   openGraph: {
-    title: "Jeff Tian | Full-Stack & AI Engineer",
+    title: "Jeff Tian",
     description:
-      "ML engineer and full-stack developer at the University of Toronto. SYNC intern, CSSC Contest Director, and builder of production ML and web systems.",
+      "The story so far, from competitive programming to production ML. CS at the University of Toronto.",
     type: "website",
   },
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
+  themeColor: "#DCE4F5",
 };
 
 export default function RootLayout({
@@ -40,12 +42,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className="dark">
-      <body
-        className={`${fraunces.variable} ${bricolage.variable} font-body antialiased`}
-      >
-        {children}
-      </body>
+    <html
+      lang="en"
+      className={`${archivo.variable} ${spaceGrotesk.variable}`}
+    >
+      <body>{children}</body>
     </html>
   );
 }

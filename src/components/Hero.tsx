@@ -1,148 +1,203 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { FiGithub, FiLinkedin, FiMail } from "react-icons/fi";
+import { useEffect, useRef } from "react";
+import { motion, useScroll, useTransform } from "framer-motion";
 import { personalInfo } from "@/data/portfolio";
+import { useStoryMotion } from "./useStoryMotion";
 
-const reveal = (delay: number) => ({
-  hidden: {
-    opacity: 0,
-    y: 40,
-    clipPath: "inset(100% 0 0 0)",
-  },
-  show: {
-    opacity: 1,
-    y: 0,
-    clipPath: "inset(0% 0 0 0)",
-    transition: {
-      duration: 0.9,
-      delay,
-      ease: [0.22, 1, 0.36, 1],
-    },
-  },
-});
+/**
+ * The hook. One orchestrated load moment (letters drop, shapes spin in,
+ * marker highlights sweep), then the shapes react to scroll and, on
+ * desktop, drift with the pointer. All of it is off for reduced motion.
+ */
+
+type Shape = {
+  kind: "circle" | "square" | "triangle" | "pill" | "star";
+  color: string;
+  className: string;
+  dx: number;
+  dy: number;
+  rot: number;
+  depth: number;
+};
+
+// Phones keep every shape in a band above the name; desktop spreads
+// them around it.
+const shapes: Shape[] = [
+  { kind: "circle", color: "#FFC93C", className: "right-4 top-5 h-20 w-20 md:right-[6%] md:top-[8%] md:h-[22vw] md:w-[22vw] md:max-h-64 md:max-w-64", dx: 160, dy: -120, rot: 90, depth: 28 },
+  { kind: "square", color: "#1E5BFF", className: "left-[50%] top-12 h-11 w-11 rotate-12 md:left-auto md:right-[30%] md:top-[30%] md:h-[12vw] md:w-[12vw] md:max-h-36 md:max-w-36", dx: 60, dy: -220, rot: -140, depth: -18 },
+  { kind: "triangle", color: "#FFFFFF", className: "left-[28%] top-4 h-14 w-14 md:left-[34%] md:top-[6%] md:h-[13vw] md:w-[13vw] md:max-h-40 md:max-w-40", dx: -120, dy: -180, rot: 200, depth: 22 },
+  { kind: "pill", color: "#0B0B0F", className: "left-[34%] top-[6.75rem] h-7 w-24 -rotate-12 md:left-auto md:right-[2%] md:top-[46%] md:h-[7vw] md:w-[20vw] md:max-h-24 md:max-w-64", dx: 220, dy: 40, rot: -60, depth: -26 },
+  { kind: "star", color: "#FFC93C", className: "left-4 top-14 h-12 w-12 md:left-[8%] md:top-[14%] md:h-[10vw] md:w-[10vw] md:max-h-32 md:max-w-32", dx: -200, dy: -60, rot: 260, depth: 16 },
+];
+
+function ShapeArt({ shape }: { shape: Shape }) {
+  const stroke = { stroke: "#0B0B0F", strokeWidth: 4 };
+  switch (shape.kind) {
+    case "circle":
+      return (
+        <svg viewBox="0 0 100 100" className="h-full w-full">
+          <circle cx="50" cy="50" r="46" fill={shape.color} {...stroke} />
+        </svg>
+      );
+    case "square":
+      return (
+        <svg viewBox="0 0 100 100" className="h-full w-full">
+          <rect x="4" y="4" width="92" height="92" rx="10" fill={shape.color} {...stroke} />
+        </svg>
+      );
+    case "triangle":
+      return (
+        <svg viewBox="0 0 100 100" className="h-full w-full">
+          <path d="M50 6 L95 92 L5 92 Z" fill={shape.color} {...stroke} strokeLinejoin="round" />
+        </svg>
+      );
+    case "pill":
+      return (
+        <svg viewBox="0 0 200 70" className="h-full w-full" preserveAspectRatio="none">
+          <rect x="3" y="3" width="194" height="64" rx="32" fill={shape.color} {...stroke} />
+        </svg>
+      );
+    case "star":
+      return (
+        <svg viewBox="0 0 100 100" className="h-full w-full">
+          <path
+            d="M50 4 L60 38 L96 38 L67 59 L78 94 L50 72 L22 94 L33 59 L4 38 L40 38 Z"
+            fill={shape.color}
+            {...stroke}
+            strokeLinejoin="round"
+          />
+        </svg>
+      );
+  }
+}
 
 export default function Hero() {
+  const ref = useRef<HTMLElement>(null);
+  const { motion: allowed, compact } = useStoryMotion();
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start start", "end start"],
+  });
+  const width = useTransform(scrollYProgress, [0, 0.7], [62, 125]);
+  const flyOut = useTransform(scrollYProgress, (v) => (allowed ? v : 0));
+
+  // Pointer parallax on desktop: shapes drift by depth, throttled to one
+  // update per animation frame.
+  useEffect(() => {
+    const el = ref.current;
+    if (!el || !allowed || compact) return;
+    if (!window.matchMedia("(pointer: fine)").matches) return;
+    let frame = 0;
+    const onMove = (event: PointerEvent) => {
+      cancelAnimationFrame(frame);
+      frame = requestAnimationFrame(() => {
+        const r = el.getBoundingClientRect();
+        el.style.setProperty("--mx", String(((event.clientX - r.left) / r.width) * 2 - 1));
+        el.style.setProperty("--my", String(((event.clientY - r.top) / r.height) * 2 - 1));
+      });
+    };
+    el.addEventListener("pointermove", onMove);
+    return () => {
+      cancelAnimationFrame(frame);
+      el.removeEventListener("pointermove", onMove);
+    };
+  }, [allowed, compact]);
+
+  const name = personalInfo.name;
+  // Every highlight is the same yellow.
+  const mark = "255 201 60";
+
   return (
-    <section
-      id="home"
-      className="relative flex min-h-screen items-end px-6 pb-16 pt-32 sm:px-10 lg:px-16"
+    <motion.section
+      ref={ref}
+      aria-labelledby="hero-name"
+      className="relative overflow-x-clip border-b-2 border-ink"
+      style={{ "--hero-wdth": width, "--hp": flyOut } as unknown as React.CSSProperties}
     >
-      {/* Circle outline — right of center, partially clipped */}
-      <motion.svg
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 1.2, delay: 0.5 }}
-        className="pointer-events-none absolute right-[-10vw] top-[15%] h-[40vw] w-[40vw] min-h-[280px] min-w-[280px] text-accent/20"
-        viewBox="0 0 100 100"
-        fill="none"
-        aria-hidden="true"
-      >
-        <motion.circle
-          cx="50"
-          cy="50"
-          r="48"
-          stroke="currentColor"
-          strokeWidth="0.5"
-          initial={{ pathLength: 0 }}
-          animate={{ pathLength: 1 }}
-          transition={{ duration: 2, delay: 0.6, ease: [0.22, 1, 0.36, 1] }}
-        />
-      </motion.svg>
-
-      <div className="relative z-10 mx-auto w-full max-w-6xl">
-        <div className="overflow-hidden">
-          <motion.h1
-            variants={reveal(0.1)}
-            initial="hidden"
-            animate="show"
-            className="font-display text-[clamp(4rem,14vw,14rem)] font-black leading-[0.85] tracking-tight text-text"
-          >
-            JEFF
-          </motion.h1>
-          <motion.h1
-            variants={reveal(0.25)}
-            initial="hidden"
-            animate="show"
-            className="font-display text-[clamp(4rem,14vw,14rem)] font-black leading-[0.85] tracking-tight text-accent"
-          >
-            TIAN
-          </motion.h1>
-        </div>
-
-        <motion.div
-          initial={{ opacity: 0, scaleX: 0 }}
-          animate={{ opacity: 1, scaleX: 1 }}
-          transition={{ duration: 0.6, delay: 0.7, ease: [0.22, 1, 0.36, 1] }}
-          className="my-6 h-px w-16 origin-left bg-accent"
-        />
-
-        <motion.p
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.85, ease: [0.22, 1, 0.36, 1] }}
-          className="mb-10 max-w-md text-base italic text-text-muted sm:text-lg"
-        >
-          ML engineer &amp; full-stack developer · CS @ UofT
-        </motion.p>
-
-        <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 1, ease: [0.22, 1, 0.36, 1] }}
-          className="flex flex-wrap items-center gap-8 text-sm font-medium"
-        >
-          <button
-            onClick={() =>
-              document
-                .getElementById("projects")
-                ?.scrollIntoView({ behavior: "smooth" })
+      {/* Decorative shapes */}
+      <div aria-hidden="true" className="pointer-events-none absolute inset-0">
+        {shapes.map((shape, i) => (
+          <div
+            key={shape.kind}
+            className={`hero-shape absolute ${shape.className}`}
+            style={
+              {
+                "--dx": `${shape.dx}px`,
+                "--dy": `${shape.dy}px`,
+                "--rot": `${shape.rot}deg`,
+                "--depth": `${shape.depth}px`,
+              } as React.CSSProperties
             }
-            className="text-text transition-colors hover:text-accent"
           >
-            View Work ↓
-          </button>
-          <button
-            onClick={() =>
-              document
-                .getElementById("contact")
-                ?.scrollIntoView({ behavior: "smooth" })
-            }
-            className="text-text-muted transition-colors hover:text-accent-warm"
-          >
-            Get in Touch →
-          </button>
-        </motion.div>
+            <div
+              className="hero-shape-inner h-full w-full"
+              style={{ "--i": i } as React.CSSProperties}
+            >
+              <ShapeArt shape={shape} />
+            </div>
+          </div>
+        ))}
       </div>
 
-      {/* Social links — bottom right */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, delay: 1.2, ease: [0.22, 1, 0.36, 1] }}
-        className="absolute bottom-10 right-6 flex items-center gap-5 sm:right-10 lg:right-16"
-      >
-        {[
-          { icon: FiGithub, href: personalInfo.github, label: "GitHub" },
-          { icon: FiLinkedin, href: personalInfo.linkedin, label: "LinkedIn" },
-          {
-            icon: FiMail,
-            href: `mailto:${personalInfo.email}`,
-            label: "Email",
-          },
-        ].map((social) => (
-          <a
-            key={social.label}
-            href={social.href}
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label={social.label}
-            className="text-text-muted transition-colors hover:text-accent"
-          >
-            <social.icon size={20} />
-          </a>
-        ))}
-      </motion.div>
-    </section>
+      <div className="relative mx-auto flex min-h-[78svh] max-w-[72rem] flex-col justify-end px-4 pb-12 pt-44 sm:px-8 md:min-h-[calc(92svh-3.5rem)]">
+        <h1
+          id="hero-name"
+          aria-label={name}
+          className="hero-name whitespace-nowrap font-display text-[clamp(3.75rem,12.5vw,11.5rem)] font-black leading-[0.82] tracking-[-0.02em]"
+        >
+          {name.split("").map((ch, i) => (
+            <span
+              key={i}
+              aria-hidden="true"
+              className="hero-letter inline-block"
+              style={{ "--i": i } as React.CSSProperties}
+            >
+              {ch === " " ? " " : ch}
+            </span>
+          ))}
+        </h1>
+
+        <div className="mt-10 grid gap-8 border-t-2 border-ink pt-8 md:grid-cols-12">
+          <p className="wide text-balance font-display text-step-2 font-bold md:col-span-7 md:text-step-3">
+            I build software people{" "}
+            <Mark i={0} color={mark}>actually use</Mark>, then
+            make it <Mark i={1} color={mark}>fast</Mark>,{" "}
+            <Mark i={2} color={mark}>tested</Mark>, and{" "}
+            <Mark i={3} color={mark}>boring to run</Mark>.
+          </p>
+          <div className="md:col-span-5">
+            <p className="text-pretty text-graphite">{personalInfo.intro}</p>
+            <div className="mt-6 flex flex-wrap gap-4">
+              <a href="#chapter-1" className="btn btn-solid">
+                Start the story
+              </a>
+              <a href="#work" className="btn">
+                Skip to all work
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </motion.section>
+  );
+}
+
+function Mark({
+  children,
+  color,
+  i,
+}: {
+  children: React.ReactNode;
+  color: string;
+  i: number;
+}) {
+  return (
+    <span
+      className="marker"
+      style={{ "--mark": color, "--i": i } as React.CSSProperties}
+    >
+      {children}
+    </span>
   );
 }
