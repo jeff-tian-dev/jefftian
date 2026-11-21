@@ -53,7 +53,7 @@ export interface SkillGroup {
 export const personalInfo = {
   name: "Jeff Tian",
   tagline:
-    "I build software people actually use, then make it fast, tested, and boring to run.",
+    "I build software people actually use, then make it fast, tested, and reliable.",
   intro:
     "Most recently a machine learning engineer intern at SYNC. I study computer science at the University of Toronto Mississauga and graduate in 2028.",
   about: [
@@ -178,13 +178,13 @@ export const problems: Problem[] = [
     stack: ["Docker", "Python", "C++", "Linux"],
   },
   {
-    id: "july",
+    id: "lotus",
     title: "Keep scammers out of a 2,000-member community",
-    name: "July",
+    name: "Lotus",
     role: "Co-Founder and Software Engineer",
     date: "Apr 2025 – present",
     statement:
-      "July started with 6 people and grew into a competitive gaming community of 2,000+ members across 20 clans. Communities that size attract scammers, and nobody can read 10,000 messages a day by hand.",
+      "Lotus started with 6 people and grew into a competitive gaming community of 2,000+ members across 20 clans. Communities that size attract scammers, and nobody can read 10,000 messages a day by hand.",
     approach: [
       "I built a Discord moderation bot that checks every posted link against a scam-domain list and a set of heuristics, flagging 50+ suspicious messages a month for staff.",
       "It runs in Docker on a Linux VPS with structured logging and health checks. Keeping false positives low mattered as much as catching scams, because a bot that cries wolf gets muted fast. This community is also the reason ClashTracker exists.",
@@ -294,10 +294,10 @@ export const chapters: Chapter[] = [
     number: 2,
     years: "2025",
     title: "Building for my own community",
-    lede: "July started with 6 people. Then it grew, and it needed software.",
+    lede: "Lotus started with 6 people. Then it grew, and it needed software.",
     links: [
       { label: "Read the ClashTracker write-up", problemId: "clashtracker" },
-      { label: "Read about the moderation bot", problemId: "july" },
+      { label: "Read about the moderation bot", problemId: "lotus" },
     ],
   },
   {

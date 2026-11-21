@@ -26,7 +26,7 @@ export default function ChapterTwo() {
           {/* The number is sized to its column (container units), so
               "2,000+" can never spill into the dots. */}
           <div className="min-w-0 [container-type:inline-size] md:col-span-5">
-            <p className="sr-only">July grew from 6 to 2,000+ members across 20 clans.</p>
+            <p className="sr-only">Lotus grew from 6 to 2,000+ members across 20 clans.</p>
             <p
               aria-hidden="true"
               className="widest figures whitespace-nowrap font-display text-[min(20cqi,7.5rem)] font-black leading-none"

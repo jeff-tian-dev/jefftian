@@ -164,7 +164,7 @@ export default function Hero() {
             <Mark i={0} color={mark}>actually use</Mark>, then
             make it <Mark i={1} color={mark}>fast</Mark>,{" "}
             <Mark i={2} color={mark}>tested</Mark>, and{" "}
-            <Mark i={3} color={mark}>boring to run</Mark>.
+            <Mark i={3} color={mark}>reliable</Mark>.
           </p>
           <div className="md:col-span-5">
             <p className="text-pretty text-graphite">{personalInfo.intro}</p>

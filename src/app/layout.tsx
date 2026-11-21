@@ -19,7 +19,7 @@ const spaceGrotesk = Space_Grotesk({
 export const metadata: Metadata = {
   title: "Jeff Tian",
   description:
-    "Jeff Tian builds software people actually use. ML engineer intern at SYNC, contest director at UofT's CSSC, co-founder of July, and builder of ClashTracker, VisionLoop, and JobRadar.",
+    "Jeff Tian builds software people actually use. ML engineer intern at SYNC, contest director at UofT's CSSC, co-founder of Lotus, and builder of ClashTracker, VisionLoop, and JobRadar.",
   authors: [{ name: "Jeff Tian" }],
   openGraph: {
     title: "Jeff Tian",

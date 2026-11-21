@@ -9,7 +9,7 @@ import Scene from "./Scene";
 
 type CopyState = "idle" | "copied" | "failed";
 
-const words = ["isn't", "written", "yet."];
+const words = ["Let's", "work", "together."];
 const shapeColors = ["#FFC93C", "#1E5BFF", "#FFFFFF", "#FFC93C", "#1E5BFF"];
 
 /** The climax: black, with the yellow and blue from the story. */
@@ -53,10 +53,7 @@ export default function Finale() {
             ))}
           </div>
           <h2 id="contact-heading">
-            <span className="seg rise-in figures block text-step-1 font-bold" style={seg(0, 0.3)}>
-              Chapter 6
-            </span>
-            <span className="widest mt-2 block text-balance font-display text-[clamp(3rem,10vw,8rem)] font-black leading-[0.92]">
+            <span className="widest block text-balance font-display text-[clamp(2.5rem,10vw,8rem)] font-black leading-[0.92]">
               {words.map((word, i) => (
                 <span key={word}>
                   <span className="inline-block overflow-hidden pb-[0.1em] align-bottom">
